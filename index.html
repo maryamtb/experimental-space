@@ -1,0 +1,65 @@
+<html>
+
+<head>
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+	<title>Experimental Three</title>
+	<style>
+		body {
+			margin: 0;
+		}
+
+		canvas {
+			display: block;
+		}
+	</style>
+</head>
+
+<body>
+
+
+	<script src="https://threejs.org/build/three.js"></script>
+	<script>
+		var renderer = new THREE.WebGLRenderer();
+
+		renderer.setSize(window.innerWidth, window.innerHeight);
+		document.body.appendChild(renderer.domElement);
+
+		var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 500);
+		camera.position.set(0, 0, 500);
+		camera.lookAt(0, 0, 0);
+
+		var scene = new THREE.Scene();
+
+		var material = new THREE.LineDashedMaterial({
+			color: 0x0000ff,
+			linewidth: 1,
+			linecap: 'round',
+			linejoin:  'round'
+			
+		});
+
+		var points = [];
+		points.push(new THREE.Vector3(100, 1, 10));
+		points.push(new THREE.Vector3(12, 1, 11));
+		points.push(new THREE.Vector3(100, 1, 20));
+
+		var geometry = new THREE.BufferGeometry().setFromPoints(points);
+		var line = new THREE.Line(geometry, material);
+		scene.add(line);
+		renderer.render(scene, camera);
+
+		camera.position.z = 50;
+
+		var animate = function () {
+			requestAnimationFrame(animate);
+
+			line.rotation.x += 0.01;
+			line.rotation.y += 0.02;
+
+			renderer.render(scene, camera);
+		};
+		animate();
+	</script>
+</body>
+
+</html>
